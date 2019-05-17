@@ -18,16 +18,18 @@ from com.zimbra.common.soap import SoapFaultException
 
 def verifyEmail( email ):
     if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]+$", email):
-        msg = "%r is an email" % email
+        msg = "%r is not an email" % email
         raise argparse.ArgumentTypeError(msg)
     return email
 
 parser = argparse.ArgumentParser(description='Zimbra account to subfolder mover')
 parser.add_argument('mailbox', help="mailbox name", type=verifyEmail)
 parser.add_argument('folderName', help="destination subfolder name")
+
 parser.add_argument('-l','--url',  help="zimbra url (default: https://127.0.0.1:7071)", default="https://127.0.0.1:7071")
 parser.add_argument('-u','--username',  help="username (default: admin)", default= "admin")
-parser.add_argument('-p','--password',  help="password", required=True)
+parser.add_argument('-p','--password',  help="password", required=False)
+
 parser.add_argument('-d','--delete',action="store_true",  help="delete subfolder if exists")
 
 
@@ -60,10 +62,15 @@ def moveSystemFolders (mbox, sourceFolder, newName):
 
 mProv = SoapProvisioning()
 mProv.soapSetURI(ZMailbox.resolveUrl(args.url, True))
+
 try:
-    mProv.soapAdminAuthenticate(args.username, args.password)
-except SoapFaultException as e:
-    sys.exit("Authorization error: "+e.code)
+    mProv.soapZimbraAdminAuthenticate()
+except:
+    try:
+	print "Unable to use local credentials. Trying to authenticate with username and password..."
+	mProv.soapAdminAuthenticate(args.username, args.password)
+    except SoapFaultException as e:
+	sys.exit("Authorization error: "+e.code)
 mbox = ZMailboxUtil()
 try:
     mbox.selectMailbox(args.mailbox,mProv)
