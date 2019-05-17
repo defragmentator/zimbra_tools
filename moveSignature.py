@@ -53,9 +53,15 @@ group.add_argument('-d','--domain', help="changes mails in domain", type=verifyD
 group.add_argument('-a','--all', help="changes all mails", action="store_true")
 parser.add_argument('-t','--test',action="store_true",  help="test mode - not altering real data")
 parser.add_argument('-v','--verbose',action="store_true",  help="verbose mode")
-parser.add_argument('-l','--url',  help="zimbra soap url (default: https://127.0.0.1:7071)", default="https://127.0.0.1:7071")
-parser.add_argument('-u','--username',  help="username (default: admin)", default= "admin")
-parser.add_argument('-p','--password',  help="password", required=True)
+
+parser.add_argument('-sl','--source_url',  help="zimbra soap url (default: https://127.0.0.1:7071)", default="https://127.0.0.1:7071")
+parser.add_argument('-su','--source_username',  help="username (default: admin)", default= "admin")
+parser.add_argument('-sp','--source_password',  help="password", required=False)
+
+parser.add_argument('-dl','--destination_url',  help="zimbra soap url (default: https://127.0.0.1:7071)", default="https://127.0.0.1:7071")
+parser.add_argument('-du','--destination_username',  help="username (default: admin)", default= "admin")
+parser.add_argument('-dp','--destination_password',  help="password", required=False)
+
 
 args = parser.parse_args()
 
@@ -83,14 +89,35 @@ def modifySignature( signature, regex, sub ):
 	user.modifySignature(signature.getId(),sigMap)
 
 
-mProv = SoapProvisioning()
-mProv.soapSetURI(ZMailbox.resolveUrl(args.url, True))
-try:
-    mProv.soapAdminAuthenticate(args.username, args.password)
-except SoapFaultException as e:
-    sys.exit("Authorization error: "+e.code)
+smProv = SoapProvisioning()
+smProv.soapSetURI(ZMailbox.resolveUrl(args.source_url, True))
 
-prov=mProv
+try:
+    smProv.soapZimbraAdminAuthenticate()
+except:
+    try:
+	print "Source: Unable to use local credentials. Trying to authenticate with username and password..."
+	smProv.soapAdminAuthenticate(args.source_username, args.source_password)
+	print "OK"
+    except SoapFaultException as e:
+	sys.exit("Source authorization error: "+e.code)
+
+dmProv = SoapProvisioning()
+dmProv.soapSetURI(ZMailbox.resolveUrl(args.destination_url, True))
+
+try:
+    dmProv.soapZimbraAdminAuthenticate()
+except:
+    try:
+	print "Destination: Unable to use local credentials. Trying to authenticate with username and password..."
+	dmProv.soapAdminAuthenticate(args.destination_username, args.destination_password)
+	print "OK"
+    except SoapFaultException as e:
+	sys.exit("Destination authorization error: "+e.code)
+
+
+
+prov=smProv
 
 #prov = Provisioning.getInstance()
 regex = re.compile(args.inregexp, re.IGNORECASE)
