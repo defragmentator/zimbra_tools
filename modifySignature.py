@@ -93,8 +93,7 @@ if not (args.mail is None):
     users.append(prov.getAccountByName(args.mail))
 else:
     if args.domain:
-	util = ProvUtil()
-	domain = util.lookupDomain(args.domain, prov);
+	domain = ProvUtil().lookupDomain(args.domain, prov);
     users =prov.getAllAccounts(domain)
 
 for user in users:
