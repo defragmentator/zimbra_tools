@@ -98,6 +98,8 @@ else:
     users =prov.getAllAccounts(domain)
 
 for user in users:
+	if user is None:
+	    sys.exit("No such account!")
 	mail = user.getMail()
 	print "Account: "+mail
 	
