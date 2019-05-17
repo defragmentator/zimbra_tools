@@ -62,7 +62,6 @@ parser.add_argument('-dl','--destination_url',  help="zimbra soap url (default: 
 parser.add_argument('-du','--destination_username',  help="username (default: admin)", default= "admin")
 parser.add_argument('-dp','--destination_password',  help="password", required=False)
 
-
 args = parser.parse_args()
 
 
@@ -87,7 +86,6 @@ def modifySignature( signature, regex, sub ):
     if not args.test:
 	sigMap[type] = newSignature
 	user.modifySignature(signature.getId(),sigMap)
-
 
 smProv = SoapProvisioning()
 smProv.soapSetURI(ZMailbox.resolveUrl(args.source_url, True))
