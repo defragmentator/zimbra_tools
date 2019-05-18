@@ -1,0 +1,4 @@
+https://github.com/jimedler/Zimbra-1/tree/master/ZimbraServer/src/java/com/zimbra/cs/account
+https://github.com/Grynn/zimbra-mirror/tree/master/ZimbraClient/src/java/com/zimbra/client
+https://github.com/vuhung/06-email-captinh/blob/master/Ma%20nguon/zcs-8.0.2_GA_5570-src/ZimbraSoap/src/java/com/zimbra/soap/admin/type/CacheEntryType.java
+
