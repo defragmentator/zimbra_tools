@@ -13,4 +13,5 @@ $exec -A -a $s_login -m $in_mail -u $s_url -p $s_password getFilterRules | while
     echo === $line ===
     echo addFilterRule $line| $exec -A -m $out_mail -z 
 done
+echo
 
