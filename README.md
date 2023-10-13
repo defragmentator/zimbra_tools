@@ -7,7 +7,7 @@ Instead of using standard commands like zmmailbox which need to be looped (which
 * acc2subfolder.py - copy all mail account content to folder in another account
 * copyAliases.sh - imports all aliases from another Zimbra instance
 * filters.sh - import all filters from another Zimbra instance
-* modifySignature.py - bulk mail signature modifications eg. for all domain users
+* modifySignature.py - bulk mail signature modifications using regular expresions 
 * moveSignature.py -  import all users signatures from another Zimbra instance
 * sync_distg.sh - import all distribution lists from another Zimbra instance
 
