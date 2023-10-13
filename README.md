@@ -37,6 +37,15 @@ executed on destination host
 ```
 ./sync_distg.sh admin@DOMAIN PASSWORD SRC_HOST
 ```
+## bulk mail signature modification with regular expresions
+Simulation of changing all signatures in domain to test 
+```
+./modifySignature.py -d DOMAIN -v -t '.*' test
+```
+Change name of company in all signatures
+```
+./modifySignature.py -a -t 'COMPANY' 'COMPANY2 INC.'
+```
 
 # Installation:
 
