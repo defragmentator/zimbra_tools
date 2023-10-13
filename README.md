@@ -32,7 +32,7 @@ rm -f /opt/zimbra/tmp/$1@$2.tgz
 
 ./copyAliases.sh $1@$2 $3@$4 admin@DOMAIN PASSWORD SRC_HOST
 ```
-## sync distribution groups 
+## distribution groups migration
 executed on destination host
 ```
 ./sync_distg.sh admin@DOMAIN PASSWORD SRC_HOST
