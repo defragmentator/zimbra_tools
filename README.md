@@ -2,7 +2,7 @@
 
 Installation:
 
-cp jython-standalone-2.7.0.jar /opt/zimbra/lib/ext-common
+cp jython-standalone-2.7.0.jar /opt/zimbra/lib/zimbra-tools
 
 cp zmpython.27 /opt/zimbra/bin
 
