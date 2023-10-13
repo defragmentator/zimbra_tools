@@ -35,7 +35,7 @@ rm -f /opt/zimbra/tmp/$1@$2.tgz
 ## sync distribution groups 
 executed on destination host
 ```
-./sync_distg admin@DOMAIN PASSWORD SRC_HOST
+./sync_distg.sh admin@DOMAIN PASSWORD SRC_HOST
 ```
 
 # Installation:
